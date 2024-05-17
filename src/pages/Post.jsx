@@ -2,7 +2,7 @@ import React from 'react'
 import  { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
-import { Button, Container } from "../components";
+import { Button, Container, Dummy } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
@@ -33,10 +33,20 @@ export default function Post() {
         });
     };
 
+    window.scrollTo(0, 0);
+
+    if (!post) {
+        return (
+            <div className='h-[70vh] flex justify-center items-center'>
+                <Dummy />
+            </div>
+        )
+    }
+
     return post ? (
         <div className="py-8">
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+                <div className="max-w-5xl mb-4 relative rounded-xl p-2">
                     <img
                         src={appwriteService.getFilePreview(post.featuredImage)}
                         alt={post.title}
@@ -44,9 +54,9 @@ export default function Post() {
                     />
 
                     {isAuthor && (
-                        <div className="absolute right-6 top-6">
+                        <div className="absolute sm:right-6 sm:top-6 -bottom-9 right-4">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
+                                <Button bgColor="bg-primary" className="mr-3 hover:scale-110 py-1">
                                     Edit
                                 </Button>
                             </Link>

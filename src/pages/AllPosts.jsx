@@ -1,64 +1,40 @@
-// import React, { useEffect, useState } from 'react'
-// import service from '../appwrite/config'
-// import { Container,PostCard } from '../components'
-
-
-// function AllPosts() {
-//     const [posts, setPosts] = useState([])
-//     useEffect( ()=>{})
-//     service.getPosts([]).then((posts)=>{
-//         if(posts){
-//             setPosts(posts.documents);
-//         }
-//     })
-//   return (
-//     <div className='w-full py-4'>
-//         <Container>
-//             {/* {posts.map( (post)=> {
-//                 <PostCard key={post.$id} post ={post} />
-//             })} */}
-
-//             <div className='flex flex-wrap'>
-//                 {posts.map( (post)=> (
-//                     <div key={post.$id} className='p-2 w-1/4'>
-//                         <PostCard  {...post}/>
-                        
-//                     </div>
-//                 ))}
-//             </div>
-//         </Container>
-//     </div>
-//   )
-// }
-
-// export default AllPosts
-
-
-import React, {useState, useEffect} from 'react'
-import { Container, PostCard } from '../components'
-import appwriteService from "../appwrite/config";
+import { useEffect, useState } from 'react'
+import appwriteService from '../appwrite/config'
+import {PostCard, Dummy} from '../components/index'
 
 function AllPosts() {
     const [posts, setPosts] = useState([])
-    useEffect(() => {}, [])
-    appwriteService.getPosts([]).then((posts) => {
-        if (posts) {
-            setPosts(posts.documents)
-        }
-    })
-  return (
-    <div className='w-full py-8'>
-        <Container>
-            <div className='flex flex-wrap'>
-                {posts.map((post) => (
-                    <div key={post.$id} className='p-2 w-1/4'>
-                        <PostCard {...post} />
-                    </div>
-                ))}
+
+    useEffect(() => {
+        appwriteService.getPosts([]).then((posts) => {
+            if (posts) {
+                setPosts(posts.documents)
+            }
+        })
+        .catch((error) => console.log("Failed to get all posts from appwrite", error))
+    }, [])
+
+    if (posts.length == 0) {
+        return (
+            <div className='h-[70vh] flex justify-center items-center'>
+                <Dummy />
             </div>
-            </Container>
-    </div>
-  )
+        )
+    }
+
+    return (
+        <div className='w-full py-8 md:pt-10'>
+            <div className='w-full max-w-8xl mx-auto px-4'>
+                <div className='flex flex-wrap justify-center'>
+                    {posts.map((post) => (
+                        <div key={post.$id} className='p-2 hover:scale-95 transition-all duration-200'>
+                            <PostCard post={post}/>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default AllPosts

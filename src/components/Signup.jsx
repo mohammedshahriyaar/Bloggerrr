@@ -24,9 +24,10 @@ function Signup() {
                 const userData=await authService.getCurrentUser();
                 //if i am able to get the user
                 if(userData){
-                    dispatch(login(userData))
-                    //once dispatched khatam login karado
+                    const userData = await authService.getCurrentUser()
+                    if(userData) dispatch(login(userData))
                     navigate("/")
+                    //once dispatched khatam login karado
                 }
             }
             

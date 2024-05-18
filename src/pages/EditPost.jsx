@@ -8,7 +8,9 @@ function EditPost() {
     const [post,setPosts]= useState(null)
     //user will click edit then go to edit page so we need to extract from url
     //slug is beign used for that
-    const slug= useParams();
+    const {slug}= useParams();
+    //slug ko sahi se extract karo nahi toh error ayega
+    //dont do const slug= useParams()
     const navigate = useNavigate();
 
     useEffect(()=>{

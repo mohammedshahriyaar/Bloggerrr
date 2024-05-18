@@ -49,8 +49,8 @@
 
 
 
-import { useEffect, useState } from 'react'
-import appwriteService from '../appwrite/config'
+import React,{useEffect,useState} from 'react'
+import service from '../appwrite/config'
 import {Container, Dummy, PostCard} from '../components/index'
 import { useSelector } from 'react-redux'
 import {Button} from '../components/index'
@@ -62,7 +62,7 @@ function Home() {
     const authStatus = useSelector(state => state.auth.status)
 
     useEffect(() => {
-        appwriteService.getPosts().then((posts) => {
+        service.getPosts().then((posts) => {
             if (posts) {
                 setPosts(posts.documents)
             }
@@ -112,7 +112,7 @@ function Home() {
                     {
                     posts.map((post) => (
                         <div key={post.$id} className='p-2 hover:scale-95 transition-all duration-200'>
-                            <PostCard post={post}/>
+                            <PostCard {...post}/>
                         </div>
                     ))}
                 </div>

@@ -28,7 +28,7 @@ function AllPosts() {
                 <div className='flex flex-wrap justify-center'>
                     {posts.map((post) => (
                         <div key={post.$id} className='p-2 hover:scale-95 transition-all duration-200'>
-                            <PostCard post={post}/>
+                            <PostCard {...post}/>
                         </div>
                     ))}
                 </div>
